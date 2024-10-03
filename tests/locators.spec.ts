@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
     await page.getByText('Form Layouts').click()
 })
 
-test('locators', async ({ page }) => {
+test('standard locators', async ({ page }) => {
     //BY TAG NAME
     page.locator('input')
 
@@ -35,4 +35,19 @@ test('locators', async ({ page }) => {
 
     //BY EXACT TEXT MATCH
     page.locator(':text-is("Using the Grid"')
+})
+
+test('user-facing attributes', async ({ page }) => {
+    await page.getByRole('textbox', { name: 'Email' }).first().click()
+    await page.getByRole('button', { name: 'Sign in' }).first().click()
+
+    await page.getByLabel('Email').first().click()
+
+    await page.getByPlaceholder('Jane Doe').click()
+
+    await page.getByText('Using the Grid').click()
+
+    // await page.getByTestId('').click() // TO DO DODAĆ atrybut do appki
+
+    await page.getByTitle('IoT Dashboard').click()
 })
