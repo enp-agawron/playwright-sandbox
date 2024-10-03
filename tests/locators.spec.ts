@@ -145,3 +145,24 @@ test('Extracting values', async ({ page }) => {
     const placeholderValue = await emailField.getAttribute('placeholder')
     expect(placeholderValue).toEqual('Email')
 })
+
+test('Assertions', async ({ page }) => {
+    const formButton = page
+        .locator('nb-card')
+        .filter({ hasText: 'Basic Form' })
+        .locator('button')
+
+    //GENERAL ASSERTIONS
+    const value = 66
+    expect(value).toEqual(66)
+
+    const text = await formButton.textContent()
+    expect(text).toEqual('Submit')
+
+    //LOCATOR ASSERTIONS
+    await expect(formButton).toHaveText('Submit')
+
+    //SOFT ASSERTIONS
+    await expect.soft(formButton).toHaveText('Submitooo')
+    await formButton.click()
+})
