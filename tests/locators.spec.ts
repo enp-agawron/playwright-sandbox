@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test'
+import { exitCode } from 'process'
 
 test.beforeEach(async ({ page }) => {
     await page.goto('http://localhost:4200')
@@ -119,4 +120,28 @@ test('Reusing locators', async ({ page }) => {
     await basicForm.getByRole('button').click()
 
     await expect(emailField).toHaveValue('agawron@adafir.eu')
+})
+
+test('Extracting values', async ({ page }) => {
+    //SINGLE VALUE
+    const basicForm = page.locator('nb-card').filter({ hasText: 'Basic Form' })
+    const buttonValue = await basicForm.locator('button').textContent()
+
+    expect(buttonValue).toEqual('Submit')
+
+    //MORE VALUES
+    const allRadioButtons = await page.locator('nb-radio').allTextContents()
+
+    expect(allRadioButtons).toContain('Option 1')
+
+    //INPUT VALUE
+    const emailField = basicForm.getByRole('textbox', { name: 'Email' })
+    await emailField.fill('agawron@adafir.eu')
+    const emailValue = await emailField.inputValue()
+
+    expect(emailValue).toEqual('agawron@adafir.eu')
+
+    //ATTRIBUTE VALUE
+    const placeholderValue = await emailField.getAttribute('placeholder')
+    expect(placeholderValue).toEqual('Email')
 })
