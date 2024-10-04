@@ -28,4 +28,39 @@ test.describe('Form Layouts page', () => {
         //LOCATOR ASSERTION
         await expect(usingTheGridEmailInput).toHaveValue('agawron@adafir.eu')
     })
+
+    test('RADIO BUTTONS', async ({ page }) => {
+        const usingGridForm = page.locator('nb-card', {
+            hasText: 'Using the Grid'
+        })
+
+        // await usingGridForm.getByLabel('Option 1').check({ force: true })
+
+        await usingGridForm
+            .getByRole('radio', { name: 'Option 2' })
+            .check({ force: true })
+
+        const radioStatus = await usingGridForm
+            .getByRole('radio', { name: 'Option 2' })
+            .isChecked() // ZWRACA TRUE or FALSE
+        expect(radioStatus).toBeTruthy()
+
+        await expect(
+            usingGridForm.getByRole('radio', { name: 'Option 2' })
+        ).toBeChecked()
+
+        await usingGridForm
+            .getByRole('radio', { name: 'Option 1' })
+            .check({ force: true })
+        expect(
+            await usingGridForm
+                .getByRole('radio', { name: 'Option 2' })
+                .isChecked()
+        ).toBeFalsy()
+        expect(
+            await usingGridForm
+                .getByRole('radio', { name: 'Option 1' })
+                .isChecked()
+        ).toBeTruthy()
+    })
 })
