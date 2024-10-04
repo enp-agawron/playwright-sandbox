@@ -82,3 +82,20 @@ test('CHECKBOXES', async ({ page }) => {
         expect(await box.isChecked()).toBeTruthy()
     }
 })
+
+test('LIST AND DROPDOWNS', async ({ page }) => {
+    const dropDownMenu = page.locator('ngx-header nb-select')
+    await dropDownMenu.click()
+
+    page.getByRole('list') // GDY UL Tag
+    page.getByRole('listitem') // GDY LI Tag
+
+    // const optionList = page.getByRole('list').locator('nb-option')
+    const optionList = page.locator('nb- option-list nb-option')
+    await expect(optionList).toHaveText([
+        'Light',
+        'Dark',
+        'Cosmic',
+        'Corporated'
+    ])
+})
