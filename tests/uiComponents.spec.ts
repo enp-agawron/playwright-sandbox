@@ -67,7 +67,7 @@ test.describe('Form Layouts page', () => {
 
 test('CHECKBOXES', async ({ page }) => {
     await page.getByText('Modal & Overlays').click()
-    await page.getByText('Toaster').click()
+    await page.getByText('Toastr').click()
 
     await page
         .getByRole('checkbox', { name: 'Hide on click' })
@@ -91,7 +91,7 @@ test('LIST AND DROPDOWNS', async ({ page }) => {
     page.getByRole('listitem') // GDY LI Tag
 
     // const optionList = page.getByRole('list').locator('nb-option')
-    const optionList = page.locator('nb- option-list nb-option')
+    const optionList = page.locator('.option-list nb-option')
     await expect(optionList).toHaveText([
         'Light',
         'Dark',
@@ -146,7 +146,5 @@ test('DIALOG BOX', async ({ page }) => {
         .locator('.nb-trash')
         .click()
 
-    await expect(page.locator('table tr').first()).not.toHaveText(
-        'mdo@gmail.com'
-    )
+    await expect(page.locator('tbody tr').first()).toHaveText('mdo@gmail.com')
 })
