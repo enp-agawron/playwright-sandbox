@@ -36,32 +36,16 @@ test.describe('Form Layouts page', () => {
 
         // await usingGridForm.getByLabel('Option 1').check({ force: true })
 
-        await usingGridForm
-            .getByRole('radio', { name: 'Option 2' })
-            .check({ force: true })
+        await usingGridForm.getByRole('radio', { name: 'Option 2' }).check({ force: true })
 
-        const radioStatus = await usingGridForm
-            .getByRole('radio', { name: 'Option 2' })
-            .isChecked() // ZWRACA TRUE or FALSE
+        const radioStatus = await usingGridForm.getByRole('radio', { name: 'Option 2' }).isChecked() // ZWRACA TRUE or FALSE
         expect(radioStatus).toBeTruthy()
 
-        await expect(
-            usingGridForm.getByRole('radio', { name: 'Option 2' })
-        ).toBeChecked()
+        await expect(usingGridForm.getByRole('radio', { name: 'Option 2' })).toBeChecked()
 
-        await usingGridForm
-            .getByRole('radio', { name: 'Option 1' })
-            .check({ force: true })
-        expect(
-            await usingGridForm
-                .getByRole('radio', { name: 'Option 2' })
-                .isChecked()
-        ).toBeFalsy()
-        expect(
-            await usingGridForm
-                .getByRole('radio', { name: 'Option 1' })
-                .isChecked()
-        ).toBeTruthy()
+        await usingGridForm.getByRole('radio', { name: 'Option 1' }).check({ force: true })
+        expect(await usingGridForm.getByRole('radio', { name: 'Option 2' }).isChecked()).toBeFalsy()
+        expect(await usingGridForm.getByRole('radio', { name: 'Option 1' }).isChecked()).toBeTruthy()
     })
 })
 
@@ -69,12 +53,8 @@ test('CHECKBOXES', async ({ page }) => {
     await page.getByText('Modal & Overlays').click()
     await page.getByText('Toastr').click()
 
-    await page
-        .getByRole('checkbox', { name: 'Hide on click' })
-        .uncheck({ force: true })
-    await page
-        .getByRole('checkbox', { name: 'Prevent arising of duplicate toast' })
-        .check({ force: true })
+    await page.getByRole('checkbox', { name: 'Hide on click' }).uncheck({ force: true })
+    await page.getByRole('checkbox', { name: 'Prevent arising of duplicate toast' }).check({ force: true })
 
     const allCheckboxes = page.getByRole('checkbox')
     for (const box of await allCheckboxes.all()) {
@@ -92,12 +72,7 @@ test('LIST AND DROPDOWNS', async ({ page }) => {
 
     // const optionList = page.getByRole('list').locator('nb-option')
     const optionList = page.locator('.option-list nb-option')
-    await expect(optionList).toHaveText([
-        'Light',
-        'Dark',
-        'Cosmic',
-        'Corporate'
-    ])
+    await expect(optionList).toHaveText(['Light', 'Dark', 'Cosmic', 'Corporate'])
     await optionList.filter({ hasText: 'Cosmic' }).click()
     const header = page.locator('nb-layout-header')
     await expect(header).toHaveCSS('background-color', 'rgb(50, 50, 89)')
@@ -140,11 +115,7 @@ test('DIALOG BOX', async ({ page }) => {
     //     dialog.accept()
     // })
 
-    await page
-        .getByRole('table')
-        .locator('tr', { hasText: 'mdo@gmail.com' })
-        .locator('.nb-trash')
-        .click()
+    await page.getByRole('table').locator('tr', { hasText: 'mdo@gmail.com' }).locator('.nb-trash').click()
 
     await expect(page.locator('tbody tr').first()).toHaveText('mdo@gmail.com')
 })
@@ -160,4 +131,13 @@ test('WEB TABLES', async ({ page }) => {
     await page.locator('input-editor').getByPlaceholder('Age').clear()
     await page.locator('input-editor').getByPlaceholder('Age').fill('55')
     await page.locator('.nb-checkmark').click()
+
+    //Get row based on the value in specyfic column
+    await page.locator('.ng2-smart-pagination-nav').getByText('2').click() // 2 page of pagination
+    const targetRowById = page.getByRole('row').filter({ has: page.locator('td').nth(1).getByText('11') })
+    await targetRowById.locator('.nb-edit').click()
+    await page.locator('input-editor').getByPlaceholder('E-mail').clear()
+    await page.locator('input-editor').getByPlaceholder('E-mail').fill('agawron@adafir.eu')
+    await page.locator('.nb-checkmark').click()
+    await expect(targetRowById.locator('td').nth(5)).toHaveText('agawron@adafir.eu')
 })
