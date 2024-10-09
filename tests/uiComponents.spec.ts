@@ -148,3 +148,16 @@ test('DIALOG BOX', async ({ page }) => {
 
     await expect(page.locator('tbody tr').first()).toHaveText('mdo@gmail.com')
 })
+
+test('WEB TABLES', async ({ page }) => {
+    await page.getByText('Tables & Data').click()
+    await page.getByText('Smart Table').click()
+
+    //Get row by any tekst in this row
+    const targetRow = page.getByRole('row', { name: 'ann@gmail.com' })
+    await targetRow.locator('.nb-edit').click()
+
+    await page.locator('input-editor').getByPlaceholder('Age').clear()
+    await page.locator('input-editor').getByPlaceholder('Age').fill('55')
+    await page.locator('.nb-checkmark').click()
+})
