@@ -174,11 +174,19 @@ test('DATE PICKER', async ({ page }) => {
 
     //BETER
     let date = new Date()
-    date.setDate(date.getDate() + 1)
+    date.setDate(date.getDate() + 30)
     const expectDate = date.getDate().toString()
-    const expectMonth = date.toLocaleString('En-US', { month: 'short' })
+    const expectMonthShort = date.toLocaleString('En-US', { month: 'short' })
+    const expectMonthLong = date.toLocaleString('En-US', { month: 'long' })
     const expectYear = date.getFullYear()
-    const dateToAssert = `${expectMonth} ${expectDate}, ${expectYear}`
+    const dateToAssert = `${expectMonthShort} ${expectDate}, ${expectYear}`
+
+    let calendarMonthAndYear = await page.locator('nb-calendar-view-mode').textContent()
+    const expectMonthAdnYear = `${expectMonthLong} ${expectYear}`
+    while (!calendarMonthAndYear?.includes(expectMonthAdnYear)) {
+        await page.locator('nb-calendar-pageable-navigation [data-name="chevron-right"]').click()
+        calendarMonthAndYear = await page.locator('nb-calendar-view-mode').textContent()
+    }
 
     await page.locator('[class="day-cell ng-star-inserted"]').getByText(expectDate, { exact: true }).click()
     await expect(calendarInputField).toHaveValue(dateToAssert)
