@@ -205,8 +205,8 @@ test('SLIDERS', async ({ page }) => {
     await tempBox.scrollIntoViewIfNeeded()
 
     const box = await tempBox.boundingBox()
-    const x = box.x + box.width / 2
-    const y = box.y + box.height / 2
+    const x = box!.x + box!.width / 2
+    const y = box!.y + box!.height / 2
 
     await page.mouse.move(x, y)
     await page.mouse.down()
