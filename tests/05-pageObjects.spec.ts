@@ -18,6 +18,14 @@ test('parametrized form method', async ({ page }) => {
     const onFormLayoutsPage = new FormPage(page)
 
     await navigateTo.formLayoutsPage()
-    await onFormLayoutsPage.submitUsingFormWithCredentialsAndSelectOption('agawron@adafir.eu', 'Testowe', 'Option 1')
-    await onFormLayoutsPage.submitUsingInlineFormWithNameEmailAndCheckbox('Artur Gawron', 'agawron@adafir.eu', false)
+    await onFormLayoutsPage.submitUsingFormWithCredentialsAndSelectOption(
+        'agawron@adafir.eu',
+        'Testowe',
+        'Option 1'
+    )
+    await onFormLayoutsPage.submitUsingInlineFormWithNameEmailAndCheckbox(
+        'Artur Gawron',
+        'agawron@adafir.eu',
+        false
+    )
 })

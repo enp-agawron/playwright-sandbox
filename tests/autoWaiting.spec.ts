@@ -15,3 +15,16 @@ test('auto waiting', async ({ page }) => {
 
     expect(text).toEqual('Data loaded with AJAX get request.')
 })
+
+test('alternative waits', async ({ page }) => {
+    const successButton = page.locator('.bg-success')
+
+    //WAIT FOR ELEMENT
+    await page.waitForSelector('.bg-success')
+
+    //WAIT FOR PARTICULAR RESPONSE
+    await page.waitForResponse('http://uitestingplayground.com/ajaxdata')
+
+    //WAIT FOR NETWORK CALLS TO BE COMPLETED
+    await page.waitForLoadState('networkidle')
+})

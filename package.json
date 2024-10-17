@@ -2,7 +2,11 @@
     "name": "pw-framework",
     "version": "1.0.0",
     "main": "index.js",
-    "scripts": {},
+    "scripts": {
+        "codegen": "npx playwright codegen demo.playwright.dev/todomvc",
+        "codegen-mobile": "npx playwright codegen --device=\"iPhone 13\" playwright.dev",
+        "codegen-maps": "npx playwright codegen --timezone=\"Europe/Rome\" --geolocation=\"41.890221,12.492348\" --lang=\"it-IT\" bing.com/maps"
+    },
     "keywords": [],
     "author": "",
     "license": "ISC",

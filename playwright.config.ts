@@ -11,7 +11,6 @@ import { defineConfig, devices } from '@playwright/test'
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-    timeout: 10000,
     testDir: './tests',
     /* Run tests in files in parallel */
     fullyParallel: true,
@@ -22,7 +21,7 @@ export default defineConfig({
     /* Opt out of parallel tests on CI. */
     workers: process.env.CI ? 1 : undefined,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-    reporter: 'html',
+    reporter: 'list',
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
         /* Base URL to use in actions like `await page.goto('/')`. */
@@ -47,7 +46,7 @@ export default defineConfig({
         {
             name: 'webkit',
             use: { ...devices['Desktop Safari'] }
-        },
+        }
 
         /* Test against mobile viewports. */
         // {
@@ -64,10 +63,10 @@ export default defineConfig({
         //   name: 'Microsoft Edge',
         //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
         // },
-        {
-            name: 'Google Chrome',
-            use: { ...devices['Desktop Chrome'], channel: 'chrome' }
-        }
+        // {
+        //     name: 'Google Chrome',
+        //     use: { ...devices['Desktop Chrome'], channel: 'chrome' }
+        // }
     ]
 
     /* Run your local dev server before starting the tests */
