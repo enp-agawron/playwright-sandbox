@@ -20,7 +20,7 @@ test.describe('suite 1', () => {
     })
 
     test('dialog', async ({ page }) => {
-        await page.getByText('Dialog').click()
+        await page.getByText('Dialogoo').click()
     })
 
     test('window', async ({ page }) => {

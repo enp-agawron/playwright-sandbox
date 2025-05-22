@@ -8,12 +8,14 @@ export class NavigationPage {
     }
 
     async formLayoutsPage() {
-        await this.page.getByText('Forms').click()
+        await this.selectGroupMenuItem('Forms')
+
         await this.page.getByText('Form Layouts').click()
     }
 
     async datepickerPage() {
-        await this.page.getByText('Forms').click()
+        await this.selectGroupMenuItem('Forms')
+
         await this.page.getByText('Datepicker').click()
     }
 

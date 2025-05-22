@@ -11,9 +11,11 @@ test('auto waiting', async ({ page }) => {
     //await successButton.click()
 
     const text = await successButton.textContent()
-    const text2 = await successButton.allTextContents()
+    //const text2 = await successButton.allTextContents()
 
     expect(text).toEqual('Data loaded with AJAX get request.')
+
+    await expect(successButton).toHaveText('Data loaded with AJAX get request.')
 })
 
 test('alternative waits', async ({ page }) => {
